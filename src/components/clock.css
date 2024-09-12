@@ -4,6 +4,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -11,27 +12,31 @@ body {
   background-color: #1e2227;
   color: #f5f6fa;
 }
-.length-controls{
+
+.length-controls {
   display: flex;
   justify-content: space-evenly;
   z-index: 10;
   margin-top: 80px;
 }
+
 .length-control {
   text-align: center;
 }
+
 .container {
   text-align: center;
   width: 700px;
   margin: 0 auto;
   height: 100vh;
-
  }
- .title {
+
+.title {
   font-family: 'Kaushan Script', cursive;
   margin: 30px 0 50px 0;
  }
- .timer {
+
+.timer {
   height: 500px;
   width: 500px;
   display: flex;
@@ -39,22 +44,27 @@ body {
   align-items: center;
   margin: 0 auto;
  }
+
  #timer-label {
   font-size: 40px;
  }
+
  #time-left {
   font-family: Roboto;
   font-size: 100px;
   margin: 70px 0 70px 0;
  }
- .timer-wrapper {
-   z-index: 10;
+
+.timer-wrapper {
+  z-index: 10;
  }
- .timer-control {
+
+.timer-control {
   display: flex;
   justify-content: space-evenly;
  }
- #start_stop {
+
+#start_stop {
   background-color: transparent;
   color: #f5f6fa;
   border: 1px solid #f5f6fa;
@@ -65,21 +75,24 @@ body {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   cursor: pointer;
  }
+
  #start_stop:hover {
   background-color: #f5f6fa;
   color: #2f3338;
  }
+
  #start_stop:active {
   background-color: #f5f6fa;
   color: #2f3338;
   outline: none;
   border: none;
  }
+
  #start_stop:focus {
   outline: none;
  }
 
- #reset {
+#reset {
   background-color: transparent;
   color: #f5f6fa;
   border: 1px solid #f5f6fa;
@@ -90,24 +103,29 @@ body {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   cursor: pointer;
  }
+
  #reset:hover {
   background-color: #f5f6fa;
   color: #2f3338;
  }
+
  #reset:active {
   background-color: #f5f6fa;
   color: #2f3338;
   outline: none;
   border: none;
- }
- #reset:focus {
+}
+
+#reset:focus {
   outline: none;
- }
- .controllers {
+}
+
+.controllers {
   display: flex;
   align-items: center;
  }
- .length-control button {
+
+.length-control button {
   background-color: transparent;
   color: #f5f6fa;
   border: none;
@@ -115,103 +133,126 @@ body {
   width: 40px;
   height: 40px;
  }
- #break-length {
+
+#break-length {
   width: 70px;
   font-size: 40px;
   margin: 0 10px 0 10px;
   background: #2f3338;
- }
- #break-label {
+}
+
+#break-label {
   font-size: 20px;
   margin-bottom: 10px;
  }
- #break-decrement {
-   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-   position: relative;
-   right: 0px;
-   cursor: pointer;
+
+#break-decrement {
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  position: relative;
+  right: 0px;
+  cursor: pointer;
  }
- #break-increment {
+
+#break-increment {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   position: relative;
   left: 0px;
   cursor: pointer;
 }
- #break-decrement:hover{
+
+#break-decrement:hover{
   right: 10px;
   color: #4cd137;
  }
- #break-decrement:active{
+
+#break-decrement:active{
   color: #f5f6fa;
   outline: none;
  }
- #break-decrement:focus {
+
+#break-decrement:focus {
   outline: none;
  }
- #break-increment:hover{
+
+#break-increment:hover{
   left: 10px;
   color: #4cd137;
  }
- #break-increment:active{
+
+#break-increment:active{
   color: #f5f6fa;
   outline: none;
  }
- #break-increment:focus {
+
+#break-increment:focus {
   outline: none;
  }
- #session-length {
+
+#session-length {
   width: 70px;
   font-size: 40px;
   margin: 0 10px 0 10px;
   background: #2f3338;
  }
- #session-label {
+
+#session-label {
   font-size: 20px;
   margin-bottom: 10px;
  }
- #session-decrement {
+
+#session-decrement {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   position: relative;
   right: 0px;
   cursor: pointer;
 }
+
 #session-increment {
- transition: all 0.3s cubic-bezier(.25,.8,.25,1);
- position: relative;
- left: 0px;
- cursor: pointer;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  position: relative;
+  left: 0px;
+  cursor: pointer;
 }
-#session-decrement:hover{
- right: 10px;
- color: #4cd137;
+
+#session-decrement:hover {
+  right: 10px;
+  color: #4cd137;
 }
-#session-decrement:active{
- color: #f5f6fa;
- outline: none;
+
+#session-decrement:active {
+  color: #f5f6fa;
+  outline: none;
 }
+
 #session-decrement:focus {
- outline: none;
+  outline: none;
 }
-#session-increment:hover{
- left: 10px;
- color: #4cd137;
+
+#session-increment:hover {
+  left: 10px;
+  color: #4cd137;
 }
-#session-increment:active{
- color: #f5f6fa;
- outline: none;
+
+#session-increment:active {
+  color: #f5f6fa;
+  outline: none;
 }
+
 #session-increment:focus {
- outline: none;
+  outline: none;
 }
- svg {
+
+svg {
   transform: scale(2.5);
   position: absolute;
 }
+
 #grey-bar {
   stroke-dashoffset: 1265.48;
   stroke: #cecece;
   stroke-width: 0.05em;
 }
+
 #bar {
   transition: stroke-dashoffset 1s cubic-bezier(.25,.8,.25,1);
   stroke-width: 0.10em;
@@ -224,33 +265,4 @@ body {
 @keyframes bar {
   0%   {stroke-dashoffset: 630;}
   100% {stroke-dashoffset: 0;}
-}
-
-@media (max-width: 700px) {
-  .container {
-    width: 100%;
-  }
-}
-@media (max-width: 550px) {
-  svg{
-    transform: scale(1.4);
-  }
-  .timer {
-    height: 300px;
-    width: 100%;
-  }
-  #time-left {
-    margin: 10px 0 10px 0;
-  }
-  #timer-label{
-    font-size: 30px;
-  }
-  #start_stop{
-    width: 40px;
-    height: 40px;
-  }
-  #reset{
-    width: 40px;
-    height: 40px;
-  }
 }
