@@ -1,10 +1,10 @@
 import React from 'react';
-import Calculator from './components/Calculator';
-import './components/Calculator.css';
+import clock from './components/clock.js';
+import './components/clock.css';
 
 const App = () => (
   <div className="App">
-    <Calculator />
+    <clock-25-5 />
   </div>
 );
 
