@@ -255,8 +255,8 @@ svg {
 }
 
 #bar {
-  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
-  stroke-width: 0.10em;
+  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+  stroke-width: 0.1em;
   transform-origin: 150px 150px;
   transform: rotate(270deg);
   animation: bar 3s;
@@ -266,6 +266,7 @@ svg {
   0% {
     stroke-dashoffset: 630;
   }
+
   100% {
     stroke-dashoffset: 0;
   }
