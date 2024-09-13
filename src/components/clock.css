@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto:100');
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,12 +30,12 @@ body {
   width: 700px;
   margin: 0 auto;
   height: 100vh;
- }
+}
 
 .title {
   font-family: 'Kaushan Script', cursive;
   margin: 30px 0 50px 0;
- }
+}
 
 .timer {
   height: 500px;
@@ -43,26 +44,26 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
- }
+}
 
- #timer-label {
+#timer-label {
   font-size: 40px;
- }
+}
 
- #time-left {
-  font-family: Roboto;
+#time-left {
+  font-family: 'Roboto', sans-serif; /* Fixed missing generic font family */
   font-size: 100px;
-  margin: 70px 0 70px 0;
- }
+  margin: 70px 0;
+}
 
 .timer-wrapper {
   z-index: 10;
- }
+}
 
 .timer-control {
   display: flex;
   justify-content: space-evenly;
- }
+}
 
 #start_stop {
   background-color: transparent;
@@ -72,25 +73,25 @@ body {
   font-size: 10px;
   width: 50px;
   height: 50px;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   cursor: pointer;
- }
+}
 
- #start_stop:hover {
+#start_stop:hover {
   background-color: #f5f6fa;
   color: #2f3338;
- }
+}
 
- #start_stop:active {
+#start_stop:active {
   background-color: #f5f6fa;
   color: #2f3338;
   outline: none;
   border: none;
- }
+}
 
- #start_stop:focus {
+#start_stop:focus {
   outline: none;
- }
+}
 
 #reset {
   background-color: transparent;
@@ -100,16 +101,16 @@ body {
   font-size: 10px;
   width: 50px;
   height: 50px;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   cursor: pointer;
- }
+}
 
- #reset:hover {
+#reset:hover {
   background-color: #f5f6fa;
   color: #2f3338;
- }
+}
 
- #reset:active {
+#reset:active {
   background-color: #f5f6fa;
   color: #2f3338;
   outline: none;
@@ -123,7 +124,7 @@ body {
 .controllers {
   display: flex;
   align-items: center;
- }
+}
 
 .length-control button {
   background-color: transparent;
@@ -132,85 +133,85 @@ body {
   font-size: 20px;
   width: 40px;
   height: 40px;
- }
+}
 
 #break-length {
   width: 70px;
   font-size: 40px;
-  margin: 0 10px 0 10px;
+  margin: 0 10px;
   background: #2f3338;
 }
 
 #break-label {
   font-size: 20px;
   margin-bottom: 10px;
- }
+}
 
 #break-decrement {
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   position: relative;
-  right: 0px;
-  cursor: pointer;
- }
-
-#break-increment {
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  position: relative;
-  left: 0px;
+  right: 0;
   cursor: pointer;
 }
 
-#break-decrement:hover{
+#break-increment {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
+  position: relative;
+  left: 0;
+  cursor: pointer;
+}
+
+#break-decrement:hover {
   right: 10px;
   color: #4cd137;
- }
+}
 
-#break-decrement:active{
+#break-decrement:active {
   color: #f5f6fa;
   outline: none;
- }
+}
 
 #break-decrement:focus {
   outline: none;
- }
+}
 
-#break-increment:hover{
+#break-increment:hover {
   left: 10px;
   color: #4cd137;
- }
+}
 
-#break-increment:active{
+#break-increment:active {
   color: #f5f6fa;
   outline: none;
- }
+}
 
 #break-increment:focus {
   outline: none;
- }
+}
 
 #session-length {
   width: 70px;
   font-size: 40px;
-  margin: 0 10px 0 10px;
+  margin: 0 10px;
   background: #2f3338;
- }
+}
 
 #session-label {
   font-size: 20px;
   margin-bottom: 10px;
- }
+}
 
 #session-decrement {
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   position: relative;
-  right: 0px;
+  right: 0;
   cursor: pointer;
 }
 
 #session-increment {
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   position: relative;
-  left: 0px;
+  left: 0;
   cursor: pointer;
 }
 
@@ -254,15 +255,18 @@ svg {
 }
 
 #bar {
-  transition: stroke-dashoffset 1s cubic-bezier(.25,.8,.25,1);
+  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.8, 0.25, 1); /* Fixed leading zero and spacing */
   stroke-width: 0.10em;
   transform-origin: 150px 150px;
   transform: rotate(270deg);
   animation: bar 3s;
 }
 
-
 @keyframes bar {
-  0%   {stroke-dashoffset: 630;}
-  100% {stroke-dashoffset: 0;}
+  0% {
+    stroke-dashoffset: 630;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
