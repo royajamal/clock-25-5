@@ -1,12 +1,13 @@
 import React from 'react';
-import clock from './components/clock.js';
 import './components/clock.css';
+import Clock from './components/clock';
 
-const App = () => (
-  <div className="App">
-    <clock-25-5 />
-  </div>
-);
+function App() {
+  return (
+    <div className="App">
+      <Clock />
+    </div>
+  );
+}
 
 export default App;
-

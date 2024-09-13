@@ -1,9 +1,8 @@
 import { createStore, combineReducers } from 'redux';
-import { sessionReducer, breakReducer } from './reducers';
+import timerReducer from './reducers';
 
 const rootReducer = combineReducers({
-  session: sessionReducer,
-  break: breakReducer,
+  timer: timerReducer,
 });
 
 const store = createStore(rootReducer);
