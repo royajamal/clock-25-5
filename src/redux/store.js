@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux'; 
+import { createStore, combineReducers } from 'redux';
 import { sessionReducer, breakReducer } from './reducers';
 
 const rootReducer = combineReducers({
