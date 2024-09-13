@@ -24,10 +24,10 @@ class ClockFace extends React.Component {
                         </button>
                     </div>
                 </div>
-                <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{filter: this.props.shadow}}>
+                <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: this.props.shadow }}>
                     <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent"></circle>
-                    <circle id="bar" r="100" cx="150" cy="150" fill="transparent" strokeDasharray="630" 
-                    style={{stroke: this.props.stroke, strokeDashoffset: '-' + this.props.progressBar }}></circle>
+                    <circle id="bar" r="100" cx="150" cy="150" fill="transparent" strokeDasharray="630"
+                        style={{ stroke: this.props.stroke, strokeDashoffset: '-' + this.props.progressBar }}></circle>
                 </svg>
             </div>
         );
@@ -88,81 +88,92 @@ class App extends React.Component {
 
     setLength(e) {
         if (this.state.timeStatus !== true) {
-            var arr, type, op;
-            arr = e.currentTarget.id.split('-');
-            type = arr[0];
-            op = arr[1];
+            const arr = e.currentTarget.id.split('-');
+            const type = arr[0];
+            const op = arr[1];
 
             if (this.state[type] !== 1 && op === 'decrement') {
                 this.setState({
                     [type]: this.state[type] - 1,
                     [type + 'Time']: this.state[type + 'Time'] - 60,
-                })
+                });
             } else if (this.state[type] !== 60 && op === 'increment') {
                 this.setState({
                     [type]: this.state[type] + 1,
                     [type + 'Time']: this.state[type + 'Time'] + 60
-                })
+                });
             }
         }
     }
 
     beginCountDown() {
         if (this.state.timeStatus === false) {
-            var type = this.state.activeType.toLowerCase() + 'Time'
-            var interval = setInterval(this.tickTock, 1000);
+            const type = this.state.activeType.toLowerCase() + 'Time';
+            const interval = setInterval(this.tickTock, 1000);
             this.setState({
                 timeStatus: true,
                 intervalID: interval,
                 progFactor: this.state.progFactor === 0 ? 630 / this.state[type] : this.state.progFactor
-            })
+            });
         } else {
-            clearInterval(this.state.intervalID)
+            clearInterval(this.state.intervalID);
             this.setState({
                 timeStatus: false,
-                intervalID: ''
-            })
+                intervalID: '',
+            });
         }
     }
 
     tickTock() {
-        this.state.activeType === 'Session' ?
-            this.setState({ sessionTime: this.state.sessionTime - 1, progress: this.state.progress + this.state.progFactor }) :
-            this.setState({ breakTime: this.state.breakTime - 1, progress: this.state.progress + this.state.progFactor });
+        this.setState(prevState => {
+            const type = prevState.activeType === 'Session' ? 'sessionTime' : 'breakTime';
+            const newTime = prevState[type] - 1;
+            const newProgress = prevState.progress + prevState.progFactor;
+            let newType = prevState.activeType;
 
-        this.switchClockFace()
+            if (newTime < 0) {
+                if (prevState.activeType === 'Session') {
+                    newType = 'Break';
+                    this.beeper.play();
+                    this.setState({ sessionTime: this.state.session * 60 });
+                } else {
+                    newType = 'Session';
+                    this.beeper.play();
+                    this.setState({ breakTime: this.state.break * 60 });
+                }
+
+                return {
+                    [type]: newTime,
+                    activeType: newType,
+                    progress: 0,
+                    progFactor: 630 / (newType === 'Session' ? this.state.session * 60 : this.state.break * 60)
+                };
+            }
+
+            return {
+                [type]: newTime,
+                progress: newProgress
+            };
+        }, this.switchClockFace);
     }
 
     switchClockFace() {
-        var type = this.state.activeType.toLowerCase() + 'Time'
+        const type = this.state.activeType.toLowerCase() + 'Time';
         if (this.state[type] < 61) {
             this.setState({
                 stroke: '#b71c1c',
                 shadow: 'drop-shadow( 0px 0px 2px #e00b0ba8 )'
-            })
+            });
         } else {
             this.setState({
                 stroke: '#4cd137',
                 shadow: 'drop-shadow( 0px 0px 2px #4cd137a8 )'
-            })
-        }
-        if (this.state[type] === 0) {
-            this.beeper.play();
-        }
-        if (this.state[type] < 0) {
-            this.state.activeType === 'Session' ?
-                this.setState({ activeType: 'Break', sessionTime: this.state.session * 60, progFactor: 630 / (this.state.break * 60), progress: 0 }) :
-                this.setState({ activeType: 'Session', breakTime: this.state.break * 60, progFactor: 630 / (this.state.session * 60), progress: 0 });
+            });
         }
     }
 
     timeFormat() {
-        var type = '';
-        if (this.state.activeType === "Session") {
-            type = "sessionTime"
-        } else {
-            type = "breakTime"
-        }
+        const type = this.state.activeType === "Session" ? "sessionTime" : "breakTime";
         let minutes = Math.floor(this.state[type] / 60);
         let seconds = this.state[type] - minutes * 60;
         minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -171,7 +182,7 @@ class App extends React.Component {
     }
 
     rest() {
-        clearInterval(this.state.intervalID)
+        clearInterval(this.state.intervalID);
         this.setState({
             break: 5,
             breakTime: 300,
@@ -184,7 +195,7 @@ class App extends React.Component {
             progFactor: 0,
             stroke: '#4cd137',
             shadow: 'drop-shadow( 0px 0px 2px #4cd137a8 )'
-        })
+        });
         this.beeper.pause();
         this.beeper.currentTime = 0;
     }
@@ -212,7 +223,6 @@ class App extends React.Component {
                         incID="session-increment" lengthID="session-length"
                         title="Session Length" onClick={this.setLength}
                         length={this.state.session} />
-
                 </div>
                 <audio id="beep" preload="auto" src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1"
                     ref={(audio) => {
