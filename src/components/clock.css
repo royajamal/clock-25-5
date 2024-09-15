@@ -27,9 +27,11 @@ body {
 
 .container {
   text-align: center;
-  width: 700px;
+  width: 90%;
+  max-width: 700px;
   margin: 0 auto;
-  height: 100vh;
+  height: auto;
+  padding: 0 20px;
 }
 
 .title {
@@ -65,7 +67,7 @@ body {
   justify-content: space-evenly;
 }
 
-#start_stop {
+#start_stop, #reset {
   background-color: transparent;
   color: #f5f6fa;
   border: 1px solid #f5f6fa;
@@ -73,51 +75,21 @@ body {
   font-size: 10px;
   width: 50px;
   height: 50px;
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
 }
 
-#start_stop:hover {
+#start_stop:hover, #reset:hover {
   background-color: #f5f6fa;
   color: #2f3338;
 }
 
-#start_stop:active {
-  background-color: #f5f6fa;
-  color: #2f3338;
+#start_stop:active, #reset:active {
   outline: none;
   border: none;
 }
 
-#start_stop:focus {
-  outline: none;
-}
-
-#reset {
-  background-color: transparent;
-  color: #f5f6fa;
-  border: 1px solid #f5f6fa;
-  border-radius: 50px;
-  font-size: 10px;
-  width: 50px;
-  height: 50px;
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  cursor: pointer;
-}
-
-#reset:hover {
-  background-color: #f5f6fa;
-  color: #2f3338;
-}
-
-#reset:active {
-  background-color: #f5f6fa;
-  color: #2f3338;
-  outline: none;
-  border: none;
-}
-
-#reset:focus {
+#start_stop:focus, #reset:focus {
   outline: none;
 }
 
@@ -135,112 +107,26 @@ body {
   height: 40px;
 }
 
-#break-length {
+#break-length, #session-length {
   width: 70px;
   font-size: 40px;
   margin: 0 10px;
   background: #2f3338;
 }
 
-#break-label {
+#break-label, #session-label {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-#break-decrement {
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  position: relative;
-  right: 0;
+#break-decrement, #break-increment, #session-decrement, #session-increment {
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-#break-increment {
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  position: relative;
-  left: 0;
-  cursor: pointer;
-}
-
-#break-decrement:hover {
-  right: 10px;
+#break-decrement:hover, #session-decrement:hover, 
+#break-increment:hover, #session-increment:hover {
   color: #4cd137;
-}
-
-#break-decrement:active {
-  color: #f5f6fa;
-  outline: none;
-}
-
-#break-decrement:focus {
-  outline: none;
-}
-
-#break-increment:hover {
-  left: 10px;
-  color: #4cd137;
-}
-
-#break-increment:active {
-  color: #f5f6fa;
-  outline: none;
-}
-
-#break-increment:focus {
-  outline: none;
-}
-
-#session-length {
-  width: 70px;
-  font-size: 40px;
-  margin: 0 10px;
-  background: #2f3338;
-}
-
-#session-label {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-#session-decrement {
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  position: relative;
-  right: 0;
-  cursor: pointer;
-}
-
-#session-increment {
-  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  position: relative;
-  left: 0;
-  cursor: pointer;
-}
-
-#session-decrement:hover {
-  right: 10px;
-  color: #4cd137;
-}
-
-#session-decrement:active {
-  color: #f5f6fa;
-  outline: none;
-}
-
-#session-decrement:focus {
-  outline: none;
-}
-
-#session-increment:hover {
-  left: 10px;
-  color: #4cd137;
-}
-
-#session-increment:active {
-  color: #f5f6fa;
-  outline: none;
-}
-
-#session-increment:focus {
-  outline: none;
 }
 
 svg {
@@ -255,7 +141,7 @@ svg {
 }
 
 #bar {
-  transition: stroke-dashoffset 1s cubic-bezier(.25, .8, .25, 1);
+  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.8, 0.25, 1);
   stroke-width: 0.1em;
   transform-origin: 150px 150px;
   transform: rotate(270deg);
@@ -271,32 +157,79 @@ svg {
   }
 }
 
-@media (max-width: 700px) {
+@media only screen and (max-width: 768px) {
   .container {
-    width: 100%;
+    width: 90%;
+    height: auto;
+    margin-top: 20px;
   }
-}
 
-@media (max-width: 550px) {
-  svg {
-    transform: scale(1.4);
-  }
   .timer {
-    height: 300px;
-    width: 100%;
+    height: 400px;
+    width: 400px;
   }
+
   #time-left {
-    margin: 10px 0;
+    font-size: 80px;
+    margin: 50px 0;
   }
+
   #timer-label {
     font-size: 30px;
   }
-  #start_stop {
-    width: 40px;
-    height: 40px;
+
+  .length-controls {
+    flex-direction: column;
+    margin-top: 40px;
   }
-  #reset {
+
+  #break-length, #session-length {
+    width: 60px;
+    font-size: 30px;
+  }
+
+  #start_stop, #reset {
+    width: 45px;
+    height: 45px;
+    font-size: 8px;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .container {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+
+  .timer {
+    height: 300px;
+    width: 300px;
+  }
+
+  #time-left {
+    font-size: 55px;
+    margin: 30px 0;
+  }
+
+  #timer-label {
+    font-size: 22px;
+  }
+
+  .length-controls {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  #break-length, #session-length {
+    width: 50px;
+    font-size: 25px;
+  }
+
+  #start_stop, #reset {
     width: 40px;
     height: 40px;
+    font-size: 10px;
   }
 }
