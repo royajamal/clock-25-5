@@ -11,16 +11,43 @@ const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke
         {format}
       </div>
       <div className="timer-control m-4">
-        <button id="start_stop" type="button" onClick={countDown} aria-label="Start/Stop">
-          {status ? <i className="fa fa-pause fa-2x" /> : <i className="fa fa-play fa-2x" />}
+        <button
+          id="start_stop"
+          type="button"
+          onClick={countDown}
+          aria-label="Start/Stop"
+        >
+          {status ? (
+            <i className="fa fa-pause fa-2x" />
+          ) : (
+            <i className="fa fa-play fa-2x" />
+          )}
         </button>
-        <button id="reset" type="button" onClick={reset} aria-label="Reset">
+        <button
+          id="reset"
+          type="button"
+          onClick={reset}
+          aria-label="Reset"
+        >
           <i className="fa fa-undo fa-2x" />
         </button>
       </div>
     </div>
-    <svg width="300" height="300" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: shadow }}>
-      <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent" />
+    <svg
+      width="300"
+      height="300"
+      viewBox="0 0 300 300"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ filter: shadow }}
+    >
+      <circle
+        id="grey-bar"
+        r="100"
+        cx="150"
+        cy="150"
+        fill="transparent"
+      />
       <circle
         id="bar"
         r="100"
@@ -60,7 +87,10 @@ const Controls = ({ labelID, decID, incID, lengthID, title, onClick, length }) =
       >
         <i className="fa fa-chevron-left fa-1x" />
       </button>
-      <div id={lengthID} className="btn-level">
+      <div
+        id={lengthID}
+        className="btn-level"
+      >
         {length}
       </div>
       <button
@@ -103,9 +133,17 @@ const App = () => {
     if (!timeStatus) {
       const [type, op] = e.currentTarget.id.split('-');
       if (type === 'break') {
-        setBreakTime(prev => (op === 'decrement' && prev > 60) ? prev - 60 : (op === 'increment' && prev < 3600) ? prev + 60 : prev);
+        setBreakTime(prev => (
+          op === 'decrement' ? (prev > 60 ? prev - 60 : prev) :
+          op === 'increment' ? (prev < 3600 ? prev + 60 : prev) :
+          prev
+        ));
       } else if (type === 'session') {
-        setSessionTime(prev => (op === 'decrement' && prev > 60) ? prev - 60 : (op === 'increment' && prev < 3600) ? prev + 60 : prev);
+        setSessionTime(prev => (
+          op === 'decrement' ? (prev > 60 ? prev - 60 : prev) :
+          op === 'increment' ? (prev < 3600 ? prev + 60 : prev) :
+          prev
+        ));
       }
     }
   };
@@ -132,16 +170,23 @@ const App = () => {
     if (newTime < 0) {
       const newType = activeType === 'Session' ? 'Break' : 'Session';
       beeper.current.play();
-      if (newType === 'Session') setSessionTime(1500); // reset session time to initial value
-      if (newType === 'Break') setBreakTime(300); // reset break time to initial value
+      if (newType === 'Session') {
+        setSessionTime(1500); // reset session time to initial value
+      }
+      if (newType === 'Break') {
+        setBreakTime(300); // reset break time to initial value
+      }
       setProgress(0);
       setActiveType(newType);
       setProgFactor(630 / (newType === 'Session' ? sessionTime : breakTime));
       return;
     }
 
-    if (activeType === 'Session') setSessionTime(newTime);
-    if (activeType === 'Break') setBreakTime(newTime);
+    if (activeType === 'Session') {
+      setSessionTime(newTime);
+    } else {
+      setBreakTime(newTime);
+    }
     setProgress(newProgress);
   };
 
