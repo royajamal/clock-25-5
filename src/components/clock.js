@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';  // Added for prop validation
+import PropTypes from 'prop-types';
 
 const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke, shadow }) => (
   <div className="timer m-4">
