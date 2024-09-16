@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const ClockFace = ({ 
-  type, 
-  format, 
-  countDown, 
-  reset, 
-  status, 
-  progressBar, 
-  stroke, 
-  shadow 
+const ClockFace = ({
+  type,
+  format,
+  countDown,
+  reset,
+  status,
+  progressBar,
+  stroke,
+  shadow
 }) => (
   <div className="timer m-4">
     <div className="timer-wrapper">
@@ -20,10 +20,10 @@ const ClockFace = ({
         {format}
       </div>
       <div className="timer-control m-4">
-        <button 
-          id="start_stop" 
-          type="button" 
-          onClick={countDown} 
+        <button
+          id="start_stop"
+          type="button"
+          onClick={countDown}
           aria-label="Start/Stop"
         >
           {status ? (
@@ -32,29 +32,29 @@ const ClockFace = ({
             <i className="fa fa-play fa-2x" />
           )}
         </button>
-        <button 
-          id="reset" 
-          type="button" 
-          onClick={reset} 
+        <button
+          id="reset"
+          type="button"
+          onClick={reset}
           aria-label="Reset"
         >
           <i className="fa fa-undo fa-2x" />
         </button>
       </div>
     </div>
-    <svg 
-      width="300" 
-      height="300" 
-      viewBox="0 0 300 300" 
-      version="1.1" 
-      xmlns="http://www.w3.org/2000/svg" 
+    <svg
+      width="300"
+      height="300"
+      viewBox="0 0 300 300"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
       style={{ filter: shadow }}
     >
-      <circle 
-        id="grey-bar" 
-        r="100" 
-        cx="150" 
-        cy="150" 
+      <circle
+        id="grey-bar"
+        r="100"
+        cx="150"
+        cy="150"
         fill="transparent" 
       />
       <circle
@@ -64,9 +64,9 @@ const ClockFace = ({
         cy="150"
         fill="transparent"
         strokeDasharray="630"
-        style={{ 
-          stroke, 
-          strokeDashoffset: `-${progressBar}` 
+        style={{
+          stroke,
+          strokeDashoffset: `-${progressBar}`
         }}
       />
     </svg>
@@ -84,14 +84,14 @@ ClockFace.propTypes = {
   shadow: PropTypes.string.isRequired,
 };
 
-const Controls = ({ 
-  labelID, 
-  decID, 
-  incID, 
-  lengthID, 
-  title, 
-  onClick, 
-  length 
+const Controls = ({
+  labelID,
+  decID,
+  incID,
+  lengthID,
+  title,
+  onClick,
+  length
 }) => (
   <div className="length-control">
     <div id={labelID}>
@@ -196,10 +196,10 @@ const App = () => {
       const newType = activeType === 'Session' ? 'Break' : 'Session';
       beeper.current.play();
       if (newType === 'Session') {
-        setSessionTime(1500); // reset session time to initial value
+        setSessionTime(1500);
       }
       if (newType === 'Break') {
-        setBreakTime(300); // reset break time to initial value
+        setBreakTime(300);
       }
       setProgress(0);
       setActiveType(newType);
