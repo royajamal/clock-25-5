@@ -67,7 +67,8 @@ body {
   justify-content: space-evenly;
 }
 
-#start_stop, #reset {
+#start_stop,
+#reset {
   background-color: transparent;
   color: #f5f6fa;
   border: 1px solid #f5f6fa;
@@ -79,17 +80,20 @@ body {
   cursor: pointer;
 }
 
-#start_stop:hover, #reset:hover {
+#start_stop:hover,
+#reset:hover {
   background-color: #f5f6fa;
   color: #2f3338;
 }
 
-#start_stop:active, #reset:active {
+#start_stop:active,
+#reset:active {
   outline: none;
   border: none;
 }
 
-#start_stop:focus, #reset:focus {
+#start_stop:focus,
+#reset:focus {
   outline: none;
 }
 
@@ -107,25 +111,32 @@ body {
   height: 40px;
 }
 
-#break-length, #session-length {
+#break-length,
+#session-length {
   width: 70px;
   font-size: 40px;
   margin: 0 10px;
   background: #2f3338;
 }
 
-#break-label, #session-label {
+#break-label,
+#session-label {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-#break-decrement, #break-increment, #session-decrement, #session-increment {
+#break-decrement,
+#break-increment,
+#session-decrement,
+#session-increment {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-#break-decrement:hover, #session-decrement:hover, 
-#break-increment:hover, #session-increment:hover {
+#break-decrement:hover,
+#session-decrement:hover,
+#break-increment:hover,
+#session-increment:hover {
   color: #4cd137;
 }
 
@@ -183,12 +194,14 @@ svg {
     margin-top: 40px;
   }
 
-  #break-length, #session-length {
+  #break-length,
+  #session-length {
     width: 60px;
     font-size: 30px;
   }
 
-  #start_stop, #reset {
+  #start_stop,
+  #reset {
     width: 45px;
     height: 45px;
     font-size: 8px;
@@ -222,12 +235,14 @@ svg {
     margin-top: 20px;
   }
 
-  #break-length, #session-length {
+  #break-length,
+  #session-length {
     width: 50px;
     font-size: 25px;
   }
 
-  #start_stop, #reset {
+  #start_stop,
+  #reset {
     width: 40px;
     height: 40px;
     font-size: 10px;
