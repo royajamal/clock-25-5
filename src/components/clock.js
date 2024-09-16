@@ -84,16 +84,10 @@ const App = () => {
   const setLength = (e) => {
     if (!timeStatus) {
       const [type, op] = e.currentTarget.id.split('-');
-      const timeType = `${type}Time`;
-
-      if (type === 'break' && (op === 'decrement' && breakTime > 60)) {
-        setBreakTime(prev => prev - 60);
-      } else if (type === 'break' && (op === 'increment' && breakTime < 3600)) {
-        setBreakTime(prev => prev + 60);
-      } else if (type === 'session' && (op === 'decrement' && sessionTime > 60)) {
-        setSessionTime(prev => prev - 60);
-      } else if (type === 'session' && (op === 'increment' && sessionTime < 3600)) {
-        setSessionTime(prev => prev + 60);
+      if (type === 'break') {
+        setBreakTime(prev => (op === 'decrement' && prev > 60) ? prev - 60 : (op === 'increment' && prev < 3600) ? prev + 60 : prev);
+      } else if (type === 'session') {
+        setSessionTime(prev => (op === 'decrement' && prev > 60) ? prev - 60 : (op === 'increment' && prev < 3600) ? prev + 60 : prev);
       }
     }
   };
@@ -104,7 +98,7 @@ const App = () => {
       const interval = setInterval(tickTock, 1000);
       setTimeStatus(true);
       setIntervalID(interval);
-      setProgFactor(progFactor === 0 ? 630 / (activeType === 'Session' ? sessionTime : breakTime) : progFactor);
+      setProgFactor(630 / (activeType === 'Session' ? sessionTime : breakTime));
     } else {
       clearInterval(intervalID);
       setTimeStatus(false);
@@ -120,8 +114,8 @@ const App = () => {
     if (newTime < 0) {
       const newType = activeType === 'Session' ? 'Break' : 'Session';
       beeper.current.play();
-      if (newType === 'Session') setSessionTime(prev => prev); // reset session time
-      if (newType === 'Break') setBreakTime(prev => prev); // reset break time
+      if (newType === 'Session') setSessionTime(1500); // reset session time to initial value
+      if (newType === 'Break') setBreakTime(300); // reset break time to initial value
       setProgress(0);
       setActiveType(newType);
       setProgFactor(630 / (newType === 'Session' ? sessionTime : breakTime));
@@ -141,12 +135,12 @@ const App = () => {
       setStroke('#4cd137');
       setShadow('drop-shadow( 0px 0px 2px #4cd137a8 )');
     }
-  }, [sessionTime, breakTime, activeType]);
+  }, [sessionTime, breakTime]);
 
   const timeFormat = () => {
-    const type = activeType === 'Session' ? 'sessionTime' : 'breakTime';
-    let minutes = Math.floor((type === 'sessionTime' ? sessionTime : breakTime) / 60);
-    let seconds = (type === 'sessionTime' ? sessionTime : breakTime) - minutes * 60;
+    const type = activeType === 'Session' ? sessionTime : breakTime;
+    let minutes = Math.floor(type / 60);
+    let seconds = type % 60;
     minutes = minutes < 10 ? `0${minutes}` : minutes;
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     return `${minutes}:${seconds}`;
