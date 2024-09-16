@@ -284,7 +284,7 @@ const App = () => {
         src="https://www.dropbox.com/s/4v0bdjldf3/beep.mp3"
         ref={beeper}
       >
-      <track kind="captions" srcLang="en" label="No captions available" />
+        <track kind="captions" srcLang="en" label="No captions available" />
       </audio>
     </div>
   );
