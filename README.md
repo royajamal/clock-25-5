@@ -6,7 +6,6 @@ The Pomodoro Clock 25/5 is designed to boost your productivity by helping you ma
 
 ## Live Demo 🎥
 ()
-
 ## Demo 📸
 ![screenshot](public/Screenshot%202024-09-12%20125443.png)
 
