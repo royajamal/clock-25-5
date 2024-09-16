@@ -9,7 +9,7 @@ const ClockFace = ({
   status,
   progressBar,
   stroke,
-  shadow
+  shadow,
 }) => (
   <div className="timer m-4">
     <div className="timer-wrapper">
@@ -55,7 +55,7 @@ const ClockFace = ({
         r="100"
         cx="150"
         cy="150"
-        fill="transparent" 
+        fill="transparent"
       />
       <circle
         id="bar"
@@ -66,7 +66,7 @@ const ClockFace = ({
         strokeDasharray="630"
         style={{
           stroke,
-          strokeDashoffset: `-${progressBar}`
+          strokeDashoffset: `-${progressBar}`,
         }}
       />
     </svg>
@@ -91,7 +91,7 @@ const Controls = ({
   lengthID,
   title,
   onClick,
-  length
+  length,
 }) => (
   <div className="length-control">
     <div id={labelID}>
@@ -150,7 +150,7 @@ const App = () => {
     if (!timeStatus) {
       const [type, op] = e.currentTarget.id.split('-');
       if (type === 'break') {
-        setBreakTime(prev => {
+        setBreakTime((prev) => {
           if (op === 'decrement' && prev > 60) {
             return prev - 60;
           }
@@ -160,7 +160,7 @@ const App = () => {
           return prev;
         });
       } else if (type === 'session') {
-        setSessionTime(prev => {
+        setSessionTime((prev) => {
           if (op === 'decrement' && prev > 60) {
             return prev - 60;
           }
@@ -173,34 +173,13 @@ const App = () => {
     }
   };
 
-  const beginCountDown = () => {
-    if (!timeStatus) {
-      const type = `${activeType.toLowerCase()}Time`;
-      const interval = setInterval(tickTock, 1000);
-      setTimeStatus(true);
-      setIntervalID(interval);
-      setProgFactor(630 / (activeType === 'Session' ? sessionTime : breakTime));
-    } else {
-      clearInterval(intervalID);
-      setTimeStatus(false);
-      setIntervalID(null);
-    }
-  };
-
   const tickTock = () => {
-    const type = activeType === 'Session' ? 'sessionTime' : 'breakTime';
-    const newTime = (type === 'sessionTime' ? sessionTime : breakTime) - 1;
+    const newTime = activeType === 'Session' ? sessionTime - 1 : breakTime - 1;
     const newProgress = progress + progFactor;
 
     if (newTime < 0) {
       const newType = activeType === 'Session' ? 'Break' : 'Session';
       beeper.current.play();
-      if (newType === 'Session') {
-        setSessionTime(1500);
-      }
-      if (newType === 'Break') {
-        setBreakTime(300);
-      }
       setProgress(0);
       setActiveType(newType);
       setProgFactor(630 / (newType === 'Session' ? sessionTime : breakTime));
@@ -213,6 +192,19 @@ const App = () => {
       setBreakTime(newTime);
     }
     setProgress(newProgress);
+  };
+
+  const beginCountDown = () => {
+    if (!timeStatus) {
+      const interval = setInterval(tickTock, 1000);
+      setTimeStatus(true);
+      setIntervalID(interval);
+      setProgFactor(630 / (activeType === 'Session' ? sessionTime : breakTime));
+    } else {
+      clearInterval(intervalID);
+      setTimeStatus(false);
+      setIntervalID(null);
+    }
   };
 
   useEffect(() => {
@@ -234,7 +226,7 @@ const App = () => {
     return `${minutes}:${seconds}`;
   };
 
-  const rest = () => {
+  const reset = () => {
     clearInterval(intervalID);
     setBreakTime(300);
     setSessionTime(1500);
@@ -258,7 +250,7 @@ const App = () => {
         type={activeType}
         format={timeFormat()}
         countDown={beginCountDown}
-        reset={rest}
+        reset={reset}
         status={timeStatus}
         progressBar={progress}
         stroke={stroke}
@@ -274,14 +266,24 @@ const App = () => {
           title="Break Length"
           onClick={setLength}
           length={breakTime / 60}
-          />
+        />
+        <Controls
+          labelID="session-label"
+          decID="session-decrement"
+          incID="session-increment"
+          lengthID="session-length"
+          title="Session Length"
+          onClick={setLength}
+          length={sessionTime / 60}
+        />
       </div>
+
       <audio
         id="beep"
         preload="auto"
-        src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1"
+        src="https://www.dropbox.com/s/4v0bdjldf3
         ref={beeper}
-        aria-label="Notification sound"
+        aria-label="Notification sound
       >
         <track kind="metadata" />
       </audio>
