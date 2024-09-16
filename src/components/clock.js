@@ -17,15 +17,15 @@ class ClockFace extends React.Component {
             {format}
           </div>
           <div className="timer-control m-4">
-            <button id="start_stop" onClick={countDown}>
+            <button id="start_stop" type="button" onClick={countDown} aria-label="Start/Stop">
               {status ? <i className="fa fa-pause fa-2x" /> : <i className="fa fa-play fa-2x" />}
             </button>
-            <button id="reset" onClick={reset}>
+            <button id="reset" type="button" onClick={reset} aria-label="Reset">
               <i className="fa fa-undo fa-2x" />
             </button>
           </div>
         </div>
-        <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: shadow }}>
+        <svg width="300" height="300" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: shadow }}>
           <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent" />
           <circle
             id="bar"
@@ -55,6 +55,8 @@ class Controls extends React.Component {
             id={decID}
             className="btn-level"
             onClick={onClick}
+            type="button"
+            aria-label={`Decrease ${title}`}
           >
             <i className="fa fa-chevron-left fa-1x" />
           </button>
@@ -65,6 +67,8 @@ class Controls extends React.Component {
             id={incID}
             className="btn-level"
             onClick={onClick}
+            type="button"
+            aria-label={`Increase ${title}`}
           >
             <i className="fa fa-chevron-right fa-1x" />
           </button>
@@ -84,7 +88,7 @@ class App extends React.Component {
       sessionTime: 1500,
       timeStatus: false,
       activeType: 'Session',
-      intervalID: '',
+      intervalID: null,
       progress: 0,
       progFactor: 0,
       stroke: '#4cd137',
@@ -105,12 +109,12 @@ class App extends React.Component {
       const op = arr[1];
 
       if (this.state[type] !== 1 && op === 'decrement') {
-        this.setState((prevState) => ({
+        this.setState(prevState => ({
           [type]: prevState[type] - 1,
           [`${type}Time`]: prevState[`${type}Time`] - 60,
         }));
       } else if (this.state[type] !== 60 && op === 'increment') {
-        this.setState((prevState) => ({
+        this.setState(prevState => ({
           [type]: prevState[type] + 1,
           [`${type}Time`]: prevState[`${type}Time`] + 60,
         }));
@@ -123,7 +127,7 @@ class App extends React.Component {
     if (!timeStatus) {
       const type = `${activeType.toLowerCase()}Time`;
       const interval = setInterval(this.tickTock, 1000);
-      this.setState((prevState) => ({
+      this.setState(prevState => ({
         timeStatus: true,
         intervalID: interval,
         progFactor: prevState.progFactor === 0 ? 630 / prevState[type] : prevState.progFactor,
@@ -132,13 +136,13 @@ class App extends React.Component {
       clearInterval(this.state.intervalID);
       this.setState({
         timeStatus: false,
-        intervalID: '',
+        intervalID: null,
       });
     }
   }
 
   tickTock() {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       const type = prevState.activeType === 'Session' ? 'sessionTime' : 'breakTime';
       const newTime = prevState[type] - 1;
       const newProgress = prevState.progress + prevState.progFactor;
@@ -148,11 +152,11 @@ class App extends React.Component {
         if (prevState.activeType === 'Session') {
           newType = 'Break';
           this.beeper.play();
-          this.setState({ sessionTime: this.state.session * 60 });
+          this.setState(prevState => ({ sessionTime: prevState.session * 60 }));
         } else {
           newType = 'Session';
           this.beeper.play();
-          this.setState({ breakTime: this.state.break * 60 });
+          this.setState(prevState => ({ breakTime: prevState.break * 60 }));
         }
 
         return {
@@ -204,7 +208,7 @@ class App extends React.Component {
       sessionTime: 1500,
       timeStatus: false,
       activeType: 'Session',
-      intervalID: '',
+      intervalID: null,
       progress: 0,
       progFactor: 0,
       stroke: '#4cd137',
@@ -256,13 +260,13 @@ class App extends React.Component {
           preload="auto"
           src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1"
           ref={(audio) => { this.beeper = audio; }}
-        />
+          aria-label="Notification sound"
+        >
+          <track default kind="metadata" />
+        </audio>
       </div>
     );
   }
 }
 
 export default App;
-
-const root = createRoot(document.getElementById('root'));
-root.render(<App />);
