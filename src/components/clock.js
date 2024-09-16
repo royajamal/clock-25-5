@@ -25,9 +25,9 @@ class ClockFace extends React.Component {
           </div>
         </div>
         <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: this.props.shadow }}>
-          <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent"></circle>
-          <circle id="bar" r="100" cx="150" cy="150" fill="transparent" strokeDasharray="630"
-            style={{ stroke: this.props.stroke, strokeDashoffset: '-' + this.props.progressBar }}></circle>
+          <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent" />
+          <circle id="bar" r="100" cx="150" cy="150" fill="transparent" strokeDasharray="630" />
+            style={{ stroke: this.props.stroke, strokeDashoffset: '-' + this.props.progressBar }}
         </svg>
       </div>
     );
@@ -224,10 +224,9 @@ class App extends React.Component {
             title="Session Length" onClick={this.setLength}
             length={this.state.session} />
         </div>
-        <audio id="beep" preload="auto" src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1"
+        <audio id="beep" preload="auto" src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1" />
           ref={(audio) => {
-            this.beeper = audio;
-          }}></audio>
+            this.beeper = audio; }}
       </div>
     );
   }
