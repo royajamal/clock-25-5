@@ -1,7 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke, shadow }) => (
+const ClockFace = ({ 
+  type, 
+  format, 
+  countDown, 
+  reset, 
+  status, 
+  progressBar, 
+  stroke, 
+  shadow 
+}) => (
   <div className="timer m-4">
     <div className="timer-wrapper">
       <div id="timer-label">
@@ -11,10 +20,10 @@ const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke
         {format}
       </div>
       <div className="timer-control m-4">
-        <button
-          id="start_stop"
-          type="button"
-          onClick={countDown}
+        <button 
+          id="start_stop" 
+          type="button" 
+          onClick={countDown} 
           aria-label="Start/Stop"
         >
           {status ? (
@@ -23,30 +32,30 @@ const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke
             <i className="fa fa-play fa-2x" />
           )}
         </button>
-        <button
-          id="reset"
-          type="button"
-          onClick={reset}
+        <button 
+          id="reset" 
+          type="button" 
+          onClick={reset} 
           aria-label="Reset"
         >
           <i className="fa fa-undo fa-2x" />
         </button>
       </div>
     </div>
-    <svg
-      width="300"
-      height="300"
-      viewBox="0 0 300 300"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
+    <svg 
+      width="300" 
+      height="300" 
+      viewBox="0 0 300 300" 
+      version="1.1" 
+      xmlns="http://www.w3.org/2000/svg" 
       style={{ filter: shadow }}
     >
-      <circle
-        id="grey-bar"
-        r="100"
-        cx="150"
-        cy="150"
-        fill="transparent"
+      <circle 
+        id="grey-bar" 
+        r="100" 
+        cx="150" 
+        cy="150" 
+        fill="transparent" 
       />
       <circle
         id="bar"
@@ -55,7 +64,10 @@ const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke
         cy="150"
         fill="transparent"
         strokeDasharray="630"
-        style={{ stroke, strokeDashoffset: `-${progressBar}` }}
+        style={{ 
+          stroke, 
+          strokeDashoffset: `-${progressBar}` 
+        }}
       />
     </svg>
   </div>
@@ -72,7 +84,15 @@ ClockFace.propTypes = {
   shadow: PropTypes.string.isRequired,
 };
 
-const Controls = ({ labelID, decID, incID, lengthID, title, onClick, length }) => (
+const Controls = ({ 
+  labelID, 
+  decID, 
+  incID, 
+  lengthID, 
+  title, 
+  onClick, 
+  length 
+}) => (
   <div className="length-control">
     <div id={labelID}>
       {title}
@@ -87,10 +107,7 @@ const Controls = ({ labelID, decID, incID, lengthID, title, onClick, length }) =
       >
         <i className="fa fa-chevron-left fa-1x" />
       </button>
-      <div
-        id={lengthID}
-        className="btn-level"
-      >
+      <div id={lengthID} className="btn-level">
         {length}
       </div>
       <button
@@ -133,17 +150,25 @@ const App = () => {
     if (!timeStatus) {
       const [type, op] = e.currentTarget.id.split('-');
       if (type === 'break') {
-        setBreakTime(prev => (
-          op === 'decrement' ? (prev > 60 ? prev - 60 : prev) :
-          op === 'increment' ? (prev < 3600 ? prev + 60 : prev) :
-          prev
-        ));
+        setBreakTime(prev => {
+          if (op === 'decrement' && prev > 60) {
+            return prev - 60;
+          }
+          if (op === 'increment' && prev < 3600) {
+            return prev + 60;
+          }
+          return prev;
+        });
       } else if (type === 'session') {
-        setSessionTime(prev => (
-          op === 'decrement' ? (prev > 60 ? prev - 60 : prev) :
-          op === 'increment' ? (prev < 3600 ? prev + 60 : prev) :
-          prev
-        ));
+        setSessionTime(prev => {
+          if (op === 'decrement' && prev > 60) {
+            return prev - 60;
+          }
+          if (op === 'increment' && prev < 3600) {
+            return prev + 60;
+          }
+          return prev;
+        });
       }
     }
   };
@@ -249,17 +274,7 @@ const App = () => {
           title="Break Length"
           onClick={setLength}
           length={breakTime / 60}
-        />
-
-        <Controls
-          labelID="session-label"
-          decID="session-decrement"
-          incID="session-increment"
-          lengthID="session-length"
-          title="Session Length"
-          onClick={setLength}
-          length={sessionTime / 60}
-        />
+          />
       </div>
       <audio
         id="beep"
