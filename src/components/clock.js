@@ -281,10 +281,8 @@ const App = () => {
       <audio
         id="beep"
         preload="auto"
-        src="https://www.dropbox.com/s/4v0bdjldf3
-        ref={beeper}
-        aria-label="Notification sound
-      >
+        src="https://www.dropbox.com/s/4v0bdjldf3/beep.mp3"
+        ref={beeper} >
         <track kind="metadata" />
       </audio>
     </div>
