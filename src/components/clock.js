@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-
-const projectName = 'pomodoro-clock';
-localStorage.setItem('example_project', 'Pomodoro Clock');
+import PropTypes from 'prop-types';  // Added for prop validation
 
 const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke, shadow }) => (
   <div className="timer m-4">
@@ -37,6 +34,17 @@ const ClockFace = ({ type, format, countDown, reset, status, progressBar, stroke
   </div>
 );
 
+ClockFace.propTypes = {
+  type: PropTypes.string.isRequired,
+  format: PropTypes.string.isRequired,
+  countDown: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  status: PropTypes.bool.isRequired,
+  progressBar: PropTypes.number.isRequired,
+  stroke: PropTypes.string.isRequired,
+  shadow: PropTypes.string.isRequired,
+};
+
 const Controls = ({ labelID, decID, incID, lengthID, title, onClick, length }) => (
   <div className="length-control">
     <div id={labelID}>
@@ -68,6 +76,16 @@ const Controls = ({ labelID, decID, incID, lengthID, title, onClick, length }) =
   </div>
 );
 
+Controls.propTypes = {
+  labelID: PropTypes.string.isRequired,
+  decID: PropTypes.string.isRequired,
+  incID: PropTypes.string.isRequired,
+  lengthID: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  length: PropTypes.number.isRequired,
+};
+
 const App = () => {
   const [breakTime, setBreakTime] = useState(300);
   const [sessionTime, setSessionTime] = useState(1500);
@@ -76,7 +94,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const [progFactor, setProgFactor] = useState(0);
   const [stroke, setStroke] = useState('#4cd137');
-  const [shadow, setShadow] = useState('drop-shadow( 0px 0px 2px #4cd137a8 )');
+  const [shadow, setShadow] = useState('drop-shadow(0px 0px 2px #4cd137a8)');
   const [intervalID, setIntervalID] = useState(null);
 
   const beeper = useRef(null);
@@ -130,10 +148,10 @@ const App = () => {
   useEffect(() => {
     if (sessionTime < 61) {
       setStroke('#b71c1c');
-      setShadow('drop-shadow( 0px 0px 2px #e00b0ba8 )');
+      setShadow('drop-shadow(0px 0px 2px #e00b0ba8)');
     } else {
       setStroke('#4cd137');
-      setShadow('drop-shadow( 0px 0px 2px #4cd137a8 )');
+      setShadow('drop-shadow(0px 0px 2px #4cd137a8)');
     }
   }, [sessionTime, breakTime]);
 
@@ -155,7 +173,7 @@ const App = () => {
     setProgress(0);
     setProgFactor(0);
     setStroke('#4cd137');
-    setShadow('drop-shadow( 0px 0px 2px #4cd137a8 )');
+    setShadow('drop-shadow(0px 0px 2px #4cd137a8)');
     if (beeper.current) {
       beeper.current.pause();
       beeper.current.currentTime = 0;
@@ -205,7 +223,7 @@ const App = () => {
         ref={beeper}
         aria-label="Notification sound"
       >
-        <track default kind="metadata" />
+        <track kind="metadata" />
       </audio>
     </div>
   );
