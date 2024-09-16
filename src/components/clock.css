@@ -163,6 +163,7 @@ svg {
   0% {
     stroke-dashoffset: 630;
   }
+  
   100% {
     stroke-dashoffset: 0;
   }
