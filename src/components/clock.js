@@ -1,33 +1,41 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const projectName = 'pomodoro-clock';
 localStorage.setItem('example_project', 'Pomodoro Clock');
 
 class ClockFace extends React.Component {
   render() {
+    const { type, format, countDown, reset, status, progressBar, stroke, shadow } = this.props;
     return (
       <div className="timer m-4">
         <div className="timer-wrapper">
           <div id="timer-label">
-            {this.props.type}
+            {type}
           </div>
           <div id="time-left">
-            {this.props.format}
+            {format}
           </div>
           <div className="timer-control m-4">
-            <button id="start_stop" onClick={this.props.countDown}>
-              {this.props.status ? <i className="fa fa-pause fa-2x" /> : <i className="fa fa-play fa-2x" />}
+            <button id="start_stop" onClick={countDown}>
+              {status ? <i className="fa fa-pause fa-2x" /> : <i className="fa fa-play fa-2x" />}
             </button>
-            <button id="reset" onClick={this.props.reset}>
+            <button id="reset" onClick={reset}>
               <i className="fa fa-undo fa-2x" />
             </button>
           </div>
         </div>
-        <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: this.props.shadow }}>
+        <svg width="300" height="300" viewport="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ filter: shadow }}>
           <circle id="grey-bar" r="100" cx="150" cy="150" fill="transparent" />
-          <circle id="bar" r="100" cx="150" cy="150" fill="transparent" strokeDasharray="630" />
-            style={{ stroke: this.props.stroke, strokeDashoffset: '-' + this.props.progressBar }}
+          <circle
+            id="bar"
+            r="100"
+            cx="150"
+            cy="150"
+            fill="transparent"
+            strokeDasharray="630"
+            style={{ stroke, strokeDashoffset: `-${progressBar}` }}
+          />
         </svg>
       </div>
     );
@@ -36,25 +44,28 @@ class ClockFace extends React.Component {
 
 class Controls extends React.Component {
   render() {
+    const { labelID, decID, incID, lengthID, title, onClick, length } = this.props;
     return (
       <div className="length-control">
-        <div id={this.props.labelID}>
-          {this.props.title}
+        <div id={labelID}>
+          {title}
         </div>
         <div className="controllers">
-          <button id={this.props.decID}
+          <button
+            id={decID}
             className="btn-level"
-            onClick={this.props.onClick}>
+            onClick={onClick}
+          >
             <i className="fa fa-chevron-left fa-1x" />
           </button>
-
-          <div id={this.props.lengthID} className="btn-level">
-            {this.props.length}
+          <div id={lengthID} className="btn-level">
+            {length}
           </div>
-
-          <button id={this.props.incID}
+          <button
+            id={incID}
             className="btn-level"
-            onClick={this.props.onClick}>
+            onClick={onClick}
+          >
             <i className="fa fa-chevron-right fa-1x" />
           </button>
         </div>
@@ -87,34 +98,36 @@ class App extends React.Component {
   }
 
   setLength(e) {
-    if (this.state.timeStatus !== true) {
+    const { timeStatus } = this.state;
+    if (timeStatus !== true) {
       const arr = e.currentTarget.id.split('-');
       const type = arr[0];
       const op = arr[1];
 
       if (this.state[type] !== 1 && op === 'decrement') {
-        this.setState({
-          [type]: this.state[type] - 1,
-          [type + 'Time']: this.state[type + 'Time'] - 60,
-        });
+        this.setState((prevState) => ({
+          [type]: prevState[type] - 1,
+          [`${type}Time`]: prevState[`${type}Time`] - 60,
+        }));
       } else if (this.state[type] !== 60 && op === 'increment') {
-        this.setState({
-          [type]: this.state[type] + 1,
-          [type + 'Time']: this.state[type + 'Time'] + 60,
-        });
+        this.setState((prevState) => ({
+          [type]: prevState[type] + 1,
+          [`${type}Time`]: prevState[`${type}Time`] + 60,
+        }));
       }
     }
   }
 
   beginCountDown() {
-    if (this.state.timeStatus === false) {
-      const type = this.state.activeType.toLowerCase() + 'Time';
+    const { timeStatus, activeType } = this.state;
+    if (!timeStatus) {
+      const type = `${activeType.toLowerCase()}Time`;
       const interval = setInterval(this.tickTock, 1000);
-      this.setState({
+      this.setState((prevState) => ({
         timeStatus: true,
         intervalID: interval,
-        progFactor: this.state.progFactor === 0 ? 630 / this.state[type] : this.state.progFactor,
-      });
+        progFactor: prevState.progFactor === 0 ? 630 / prevState[type] : prevState.progFactor,
+      }));
     } else {
       clearInterval(this.state.intervalID);
       this.setState({
@@ -125,7 +138,7 @@ class App extends React.Component {
   }
 
   tickTock() {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const type = prevState.activeType === 'Session' ? 'sessionTime' : 'breakTime';
       const newTime = prevState[type] - 1;
       const newProgress = prevState.progress + prevState.progFactor;
@@ -158,7 +171,8 @@ class App extends React.Component {
   }
 
   switchClockFace() {
-    const type = this.state.activeType.toLowerCase() + 'Time';
+    const { activeType } = this.state;
+    const type = `${activeType.toLowerCase()}Time`;
     if (this.state[type] < 61) {
       this.setState({
         stroke: '#b71c1c',
@@ -176,9 +190,9 @@ class App extends React.Component {
     const type = this.state.activeType === 'Session' ? 'sessionTime' : 'breakTime';
     let minutes = Math.floor(this.state[type] / 60);
     let seconds = this.state[type] - minutes * 60;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-    return minutes + ':' + seconds;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+    return `${minutes}:${seconds}`;
   }
 
   rest() {
@@ -206,27 +220,43 @@ class App extends React.Component {
         <h1 className="title">Pomodoro Clock</h1>
 
         <ClockFace
-          type={this.state.activeType} format={this.timeFormat()}
-          countDown={this.beginCountDown} reset={this.rest}
-          status={this.state.timeStatus} progressBar={this.state.progress}
-          stroke={this.state.stroke} shadow={this.state.shadow} />
+          type={this.state.activeType}
+          format={this.timeFormat()}
+          countDown={this.beginCountDown}
+          reset={this.rest}
+          status={this.state.timeStatus}
+          progressBar={this.state.progress}
+          stroke={this.state.stroke}
+          shadow={this.state.shadow}
+        />
 
         <div className="length-controls m-4">
           <Controls
-            labelID="break-label" decID="break-decrement"
-            incID="break-increment" lengthID="break-length"
-            title="Break Length" onClick={this.setLength}
-            length={this.state.break} />
+            labelID="break-label"
+            decID="break-decrement"
+            incID="break-increment"
+            lengthID="break-length"
+            title="Break Length"
+            onClick={this.setLength}
+            length={this.state.break}
+          />
 
           <Controls
-            labelID="session-label" decID="session-decrement"
-            incID="session-increment" lengthID="session-length"
-            title="Session Length" onClick={this.setLength}
-            length={this.state.session} />
+            labelID="session-label"
+            decID="session-decrement"
+            incID="session-increment"
+            lengthID="session-length"
+            title="Session Length"
+            onClick={this.setLength}
+            length={this.state.session}
+          />
         </div>
-        <audio id="beep" preload="auto" src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1" />
-          ref={(audio) => {
-            this.beeper = audio; }}
+        <audio
+          id="beep"
+          preload="auto"
+          src="https://www.dropbox.com/s/4v0bdjldf3kjl6s/beep.mp3?raw=1"
+          ref={(audio) => { this.beeper = audio; }}
+        />
       </div>
     );
   }
@@ -234,4 +264,5 @@ class App extends React.Component {
 
 export default App;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
