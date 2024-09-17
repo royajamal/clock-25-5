@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const ClockFace = ({
+function ClockFace({
   type,
   format,
   countDown,
@@ -10,68 +10,66 @@ const ClockFace = ({
   progressBar,
   stroke,
   shadow,
-}) => (
-  <div className="timer m-4">
-    <div className="timer-wrapper">
-      <div id="timer-label">
-        {type}
+}) {
+  return (
+    <div className="timer m-4">
+      <div className="timer-wrapper">
+        <div id="timer-label">{type}</div>
+        <div id="time-left">{format}</div>
+        <div className="timer-control m-4">
+          <button
+            id="start_stop"
+            type="button"
+            onClick={countDown}
+            aria-label="Start/Stop"
+          >
+            {status ? (
+              <i className="fa fa-pause fa-2x" />
+            ) : (
+              <i className="fa fa-play fa-2x" />
+            )}
+          </button>
+          <button
+            id="reset"
+            type="button"
+            onClick={reset}
+            aria-label="Reset"
+          >
+            <i className="fa fa-undo fa-2x" />
+          </button>
+        </div>
       </div>
-      <div id="time-left">
-        {format}
-      </div>
-      <div className="timer-control m-4">
-        <button
-          id="start_stop"
-          type="button"
-          onClick={countDown}
-          aria-label="Start/Stop"
-        >
-          {status ? (
-            <i className="fa fa-pause fa-2x" />
-          ) : (
-            <i className="fa fa-play fa-2x" />
-          )}
-        </button>
-        <button
-          id="reset"
-          type="button"
-          onClick={reset}
-          aria-label="Reset"
-        >
-          <i className="fa fa-undo fa-2x" />
-        </button>
-      </div>
+      <svg
+        width="300"
+        height="300"
+        viewBox="0 0 300 300"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ filter: shadow }}
+      >
+        <circle
+          id="grey-bar"
+          r="100"
+          cx="150"
+          cy="150"
+          fill="transparent"
+        />
+        <circle
+          id="bar"
+          r="100"
+          cx="150"
+          cy="150"
+          fill="transparent"
+          strokeDasharray="630"
+          style={{
+            stroke,
+            strokeDashoffset: -progressBar,
+          }}
+        />
+      </svg>
     </div>
-    <svg
-      width="300"
-      height="300"
-      viewBox="0 0 300 300"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ filter: shadow }}
-    >
-      <circle
-        id="grey-bar"
-        r="100"
-        cx="150"
-        cy="150"
-        fill="transparent"
-      />
-      <circle
-        id="bar"
-        r="100"
-        cx="150"
-        cy="150"
-        fill="transparent"
-        strokeDasharray="630"
-        style={{
-          stroke,
-          strokeDashoffset: `-${progressBar}`,
-        }}
-      />
-    </svg>
-  </div>
-);
+  );
+}
 
 ClockFace.propTypes = {
   type: PropTypes.string.isRequired,
@@ -84,7 +82,7 @@ ClockFace.propTypes = {
   shadow: PropTypes.string.isRequired,
 };
 
-const Controls = ({
+function Controls({
   labelID,
   decID,
   incID,
@@ -92,36 +90,34 @@ const Controls = ({
   title,
   onClick,
   length,
-}) => (
-  <div className="length-control">
-    <div id={labelID}>
-      {title}
-    </div>
-    <div className="controllers">
-      <button
-        id={decID}
-        className="btn-level"
-        onClick={onClick}
-        type="button"
-        aria-label={`Decrease ${title}`}
-      >
-        <i className="fa fa-chevron-left fa-1x" />
-      </button>
-      <div id={lengthID} className="btn-level">
-        {length}
+}) {
+  return (
+    <div className="length-control">
+      <div id={labelID}>{title}</div>
+      <div className="controllers">
+        <button
+          id={decID}
+          className="btn-level"
+          onClick={onClick}
+          type="button"
+          aria-label={`Decrease ${title}`}
+        >
+          <i className="fa fa-chevron-left fa-1x" />
+        </button>
+        <div id={lengthID} className="btn-level">{length}</div>
+        <button
+          id={incID}
+          className="btn-level"
+          onClick={onClick}
+          type="button"
+          aria-label={`Increase ${title}`}
+        >
+          <i className="fa fa-chevron-right fa-1x" />
+        </button>
       </div>
-      <button
-        id={incID}
-        className="btn-level"
-        onClick={onClick}
-        type="button"
-        aria-label={`Increase ${title}`}
-      >
-        <i className="fa fa-chevron-right fa-1x" />
-      </button>
     </div>
-  </div>
-);
+  );
+}
 
 Controls.propTypes = {
   labelID: PropTypes.string.isRequired,
@@ -133,7 +129,7 @@ Controls.propTypes = {
   length: PropTypes.number.isRequired,
 };
 
-const App = () => {
+function App() {
   const [breakTime, setBreakTime] = useState(300);
   const [sessionTime, setSessionTime] = useState(1500);
   const [timeStatus, setTimeStatus] = useState(false);
@@ -288,6 +284,6 @@ const App = () => {
       </audio>
     </div>
   );
-};
+}
 
 export default App;

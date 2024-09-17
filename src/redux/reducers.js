@@ -11,42 +11,45 @@ const initialState = {
   shadow: 'drop-shadow( 0px 0px 2px #4cd137a8 )',
 };
 
-const timerReducer = (state = initialState, action) => {
+const timerReducer = (state, action) => {
+  // Set default state inside the function body
+  const currentState = state || initialState;
+
   switch (action.type) {
     case 'SET_BREAK_LENGTH':
       return {
-        ...state,
+        ...currentState,
         break: action.payload,
         breakTime: action.payload * 60,
       };
     case 'SET_SESSION_LENGTH':
       return {
-        ...state,
+        ...currentState,
         session: action.payload,
         sessionTime: action.payload * 60,
       };
     case 'START_COUNTDOWN':
       return {
-        ...state,
+        ...currentState,
         timeStatus: true,
         intervalID: action.payload.intervalID,
         progFactor: action.payload.progFactor,
       };
     case 'STOP_COUNTDOWN':
       return {
-        ...state,
+        ...currentState,
         timeStatus: false,
         intervalID: null,
       };
     case 'TICK':
       return {
-        ...state,
-        [state.activeType === 'Session' ? 'sessionTime' : 'breakTime']: action.payload.time,
+        ...currentState,
+        [currentState.activeType === 'Session' ? 'sessionTime' : 'breakTime']: action.payload.time,
         progress: action.payload.progress,
       };
     case 'SWITCH_CLOCK_PHASE':
       return {
-        ...state,
+        ...currentState,
         activeType: action.payload.activeType,
         sessionTime: action.payload.sessionTime,
         breakTime: action.payload.breakTime,
@@ -56,7 +59,7 @@ const timerReducer = (state = initialState, action) => {
     case 'RESET':
       return initialState;
     default:
-      return state;
+      return currentState;
   }
 };
 
